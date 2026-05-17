@@ -1,0 +1,3784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- Base Setup --- */
+        .rolex-hero-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            padding: 20px 20px 180px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .editorial-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .editorial-image-wrapper {
+            width: 75%;
+            position: relative;
+            z-index: 1;
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .editorial-image-wrapper img {
+            width: 100%;
+            height: 650px;
+            object-fit: cover;
+            display: block;
+            transform: scale(1.1);
+            transition: transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .editorial-wrapper.is-visible .editorial-image-wrapper {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .editorial-wrapper.is-visible .editorial-image-wrapper img {
+            transform: scale(1);
+        }
+
+        /* --- Text Box Styling --- */
+        .editorial-content {
+            position: absolute;
+            bottom: -120px;
+            right: 0;
+            width: 55%;
+            background-color: #ffffff;
+            padding: 80px 60px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .editorial-content::before {
+            content: "1905";
+            position: absolute;
+            top: -40px;
+            right: 40px;
+
+            font-size: 8rem;
+            color: #f4f4f4;
+            z-index: -1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease 0.6s;
+        }
+
+        .editorial-wrapper.is-visible .editorial-content::before {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .overline {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #212529;
+            margin-bottom: 15px;
+            display: block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        .editorial-content h1 {
+
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #222;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        .editorial-content p {
+            font-size: 1rem;
+            line-height: 1.9;
+
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.8s;
+        }
+
+        .editorial-wrapper.is-visible .overline,
+        .editorial-wrapper.is-visible h1,
+        .editorial-wrapper.is-visible p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .editorial-image-wrapper {
+                width: 85%;
+            }
+
+            .editorial-content {
+                width: 65%;
+                padding: 50px 40px;
+                bottom: -80px;
+            }
+
+            .editorial-content h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rolex-hero-container {
+                padding: 60px 15px 60px 15px;
+            }
+
+            .editorial-image-wrapper {
+                width: 100%;
+            }
+
+            .editorial-image-wrapper img {
+                height: 400px;
+            }
+
+            .editorial-content {
+                position: relative;
+                width: calc(100% - 30px);
+                bottom: auto;
+                right: auto;
+                margin: -80px auto 0 auto;
+                padding: 20px 25px;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            }
+
+            .editorial-content h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .editorial-content::before {
+                font-size: 4.5rem;
+                top: -25px;
+                right: 20px;
+            }
+
+            .editorial-content p {
+                font-size: 0.95rem;
+                line-height: 1.7;
+            }
+        }
+
+        /* =========================================
+       SECTION 2: STICKY SCROLL TIMELINE
+       ========================================= */
+
+        .rolex-timeline-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 0px 20px 50px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Intro Header */
+        .timeline-intro {
+            max-width: 900px;
+            margin: 0 auto 80px auto;
+            text-align: center;
+        }
+
+        .timeline-intro h2 {
+
+            font-size: 3rem;
+            color: #222;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 992px) {
+            .timeline-intro h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .timeline-intro p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+
+            text-align: justify;
+        }
+
+        /* Sticky Scroll Layout */
+        .timeline-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 60px;
+            position: relative;
+        }
+
+        /* Left Side: Pinned Image */
+        .timeline-image-col {
+            width: 50%;
+            position: sticky;
+            top: 120px;
+            height: 70vh;
+            max-height: 700px;
+        }
+
+        .timeline-image-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .swiss-badge {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-left: 3px solid #212529;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #222;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-steps-col {
+            width: 50%;
+            padding-top: 50px;
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 32px;
+            top: 60px;
+            bottom: 0;
+            width: 1px;
+            background: #212529;
+            z-index: 1;
+        }
+
+        .timeline-step {
+            position: relative;
+            z-index: 2;
+            padding-left: 80px;
+            margin-bottom: 100px;
+            opacity: 0.3;
+            transform: translateX(30px);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .timeline-step.is-active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .step-number {
+
+            font-size: 5rem;
+            line-height: 0.8;
+            color: transparent;
+            -webkit-text-stroke: 1px #212529;
+            margin-bottom: 20px;
+            transition: all 0.6s ease;
+        }
+
+        .timeline-step.is-active .step-number {
+            color: #212529;
+            -webkit-text-stroke: 0px;
+        }
+
+        .timeline-step h3 {
+
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .timeline-step p {
+            font-size: 1rem;
+            line-height: 1.8;
+
+        }
+
+        @media (max-width: 1024px) {
+            .rolex-timeline-container {
+                padding: 80px 20px 80px 20px;
+            }
+
+            .timeline-wrapper {
+                gap: 40px;
+            }
+
+            .timeline-step {
+                padding-left: 50px;
+                margin-bottom: 80px;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-image-col {
+                top: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rolex-timeline-container {
+                padding: 60px 15px 60px 15px;
+            }
+
+            .timeline-intro {
+                margin-bottom: 40px;
+            }
+
+            .timeline-wrapper {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .timeline-image-col {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: 400px;
+                max-height: 50vh;
+            }
+
+            .timeline-steps-col {
+                width: 100%;
+                padding-bottom: 0;
+                padding-top: 20px;
+            }
+
+            .timeline-step {
+                margin-bottom: 60px;
+                opacity: 1;
+                transform: none;
+                padding-left: 40px;
+            }
+
+            .timeline-line {
+                left: 10px;
+            }
+
+            .step-number {
+                font-size: 4rem;
+                color: #c8b08e;
+                -webkit-text-stroke: 0px;
+            }
+        }
+
+        /* =========================================
+       SECTION 3: ENERGETIC BENTO BOX GRID
+       ========================================= */
+
+        .rolex-bento-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            padding: 20px 20px 80px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .bento-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+        }
+
+        .bento-header h2 {
+
+            font-size: 3rem;
+            color: #222;
+            margin-bottom: 20px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .rolex-bento-container.is-visible .bento-header h2,
+        .rolex-bento-container.is-visible .overline {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(340px, auto);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bento-card {
+            background: #fff;
+
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease, opacity 0.6s ease;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .rolex-bento-container.is-visible .bento-card:nth-child(1) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .rolex-bento-container.is-visible .bento-card:nth-child(2) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .rolex-bento-container.is-visible .bento-card:nth-child(3) {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.6s;
+        }
+
+        .rolex-bento-container.is-visible .bento-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            transition-delay: 0s;
+        }
+
+        .card-oyster {
+            grid-column: 1 / 3;
+            display: flex;
+            align-items: stretch;
+        }
+
+        .card-oyster .bento-text-box {
+            flex: 1.2;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-oyster .bento-image-box {
+            flex: 0.8;
+            position: relative;
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .card-oyster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .card-oyster:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-adventure {
+            grid-column: 3 / 4;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .card-adventure img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            transition: transform 0.8s ease;
+        }
+
+        .card-adventure:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-adventure::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
+            z-index: 2;
+        }
+
+        .card-adventure .bento-overlay-text {
+            position: relative;
+            z-index: 3;
+        }
+
+        .card-icons {
+            grid-column: 1 / 3;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f6f0 100%);
+            display: flex;
+            align-items: center;
+            padding: 40px 50px;
+            border: 1px solid rgba(200, 176, 142, 0.2);
+        }
+
+        .bento-card h3 {
+
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .bento-card h3 {
+                text-align: center;
+            }
+        }
+
+        .card-oyster h3,
+        .card-icons h3 {
+            color: #222;
+        }
+
+        .card-adventure h3 {
+            color: #ffffff;
+        }
+
+        .bento-card p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .card-oyster p,
+        .card-icons p {
+
+        }
+
+        .card-adventure p {
+            color: #eaeaea;
+        }
+
+        .card-icons strong {
+            color: #222;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card-oyster {
+                grid-column: 1 / 3;
+            }
+
+            .card-adventure {
+                grid-column: 1 / 2;
+                grid-row: auto;
+            }
+
+            .card-icons {
+                grid-column: 2 / 3;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rolex-bento-container {
+                padding: 60px 15px 60px 15px;
+            }
+
+            .bento-header h2 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-oyster,
+            .card-adventure,
+            .card-icons {
+                grid-column: 1 / 2;
+                grid-row: auto;
+            }
+
+            .card-oyster {
+                flex-direction: column;
+            }
+
+            .card-oyster .bento-image-box {
+                height: 250px;
+                clip-path: none;
+                flex: none;
+            }
+
+            .card-oyster .bento-text-box {
+                padding: 30px;
+            }
+
+            .card-icons {
+                text-align: center;
+                padding: 30px;
+            }
+        }
+
+        /* =========================================
+       SECTION 4: LIGHT THEME CTA SPLIT
+       ========================================= */
+
+        .rolex-cta-container {
+            display: flex;
+            width: 100%;
+            min-height: 85vh;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            overflow: hidden;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .cta-image-col {
+            flex: 1;
+            position: relative;
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .cta-image-col img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: scale(1.1);
+            transition: transform 2.5s ease;
+        }
+
+        .rolex-cta-container.is-visible .cta-image-col {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .rolex-cta-container.is-visible .cta-image-col img {
+            transform: scale(1);
+        }
+
+        .cta-text-col {
+            flex: 1.1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 10%;
+            color: #222;
+            position: relative;
+        }
+
+        .cta-text-col::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 0;
+            background-color: #c8b08e;
+            transition: height 1.5s ease 0.5s;
+        }
+
+        .rolex-cta-container.is-visible .cta-text-col::before {
+            height: 100%;
+        }
+
+        .cta-text-col .overline {
+            color: #212529;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        .cta-text-col h2 {
+
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            font-weight: 400;
+            color: #222;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        .cta-text-col p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.8s;
+            text-align: justify;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 18px 40px;
+            background-color: transparent;
+            color: #222;
+            border: 1px solid #212529;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            width: fit-content;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .rolex-cta-container.is-visible .overline,
+        .rolex-cta-container.is-visible h2,
+        .rolex-cta-container.is-visible p,
+        .rolex-cta-container.is-visible .cta-button {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-cta-container.is-visible .cta-button {
+            transition: all 0.8s ease 1s, background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #212529;
+            color: #fff !important;
+        }
+
+        .cta-button svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 15px;
+            transition: transform 0.4s ease;
+        }
+
+        .cta-button:hover svg {
+            transform: translateX(6px);
+        }
+
+        @media (max-width: 1024px) {
+            .cta-text-col h2 {
+                font-size: 2rem;
+                text-align: center;
+                margin-top: 0rem;
+                margin-bottom: 1rem;
+            }
+
+            .cta-text-col {
+                padding: 60px 6%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rolex-cta-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .cta-image-col {
+                min-height: 400px;
+                flex: none;
+            }
+
+            .cta-text-col {
+                padding: 20px 0px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .cta-text-col::before {
+                width: 0;
+                height: 1px;
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                transition: width 1.5s ease 0.5s;
+                background-color: #c8b08e;
+            }
+
+            .rolex-cta-container.is-visible .cta-text-col::before {
+                height: 1px;
+                width: 60%;
+            }
+
+            .cta-text-col h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* =========================================
+       SECTION 1: EDITORIAL PILLARS OPENER
+       ========================================= */
+
+        .rolex-trust-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 0px 0px 40px 0px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .trust-hero-split {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            display: flex;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .trust-title-col {
+            flex: 1.2;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .trust-intro-col {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+        }
+
+        .rolex-trust-container.is-visible .trust-title-col,
+        .rolex-trust-container.is-visible .trust-intro-col {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .trust-title-col .overline {
+            color: #c8b08e;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+
+
+        .trust-intro-col p {
+
+            line-height: 1.9;
+
+            margin: 0;
+            border-left: 2px solid #212529;
+            padding-left: 25px;
+        }
+
+        .trust-visual-break {
+            max-width: 1200px;
+            margin: 0 auto 20px auto;
+            height: 450px;
+
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
+        }
+
+        .rolex-trust-container.is-visible .trust-visual-break {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .trust-visual-break img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 2.5s ease 0.4s;
+        }
+
+        .rolex-trust-container.is-visible .trust-visual-break img {
+            transform: scale(1);
+        }
+
+        .trust-pillars-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+        }
+
+        .trust-pillar {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rolex-trust-container.is-visible .trust-pillar:nth-child(1) {
+            transition-delay: 0.6s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-trust-container.is-visible .trust-pillar:nth-child(2) {
+            transition-delay: 0.8s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-trust-container.is-visible .trust-pillar:nth-child(3) {
+            transition-delay: 1.0s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .trust-pillar-number {
+
+            font-size: 3rem;
+            color: transparent;
+            -webkit-text-stroke: 1px #212529;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .trust-pillar h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #212529;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .trust-pillar p {
+
+            line-height: 1.8;
+
+            margin: 0;
+            text-align: justify;
+        }
+
+        @media (max-width: 1024px) {
+            .trust-hero-split {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+
+            .trust-intro-col p {
+                border-left: none;
+                padding-left: 0;
+                border-top: 2px solid #c8b08e;
+                padding-top: 25px;
+                text-align: justify;
+            }
+
+            .trust-visual-break {
+                height: 350px;
+                margin-bottom: 60px;
+            }
+
+            .trust-pillars-grid {
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+
+            .trust-visual-break {
+                height: 250px;
+                margin-bottom: 10px;
+            }
+
+            .trust-pillars-grid {
+                grid-template-columns: 1fr;
+                gap: 0px;
+            }
+
+            .trust-pillar {
+                text-align: center;
+            }
+
+            .trust-pillar-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* =========================================
+       SECTION: ORGANIC GEOMETRY (SMART CHOICE)
+       ========================================= */
+
+        .rolex-smart-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 20px 20px 60px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .smart-grid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .smart-text-col {
+            flex: 1.2;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rolex-smart-container.is-visible .smart-text-col {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .smart-text-col .overline {
+            color: #c8b08e;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #c8b08e;
+            padding-bottom: 5px;
+        }
+
+        .smart-text-col h2 {
+
+
+            line-height: 1.15;
+            color: #222;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .smart-text-col .lead-text {
+
+            line-height: 1.7;
+
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .smart-text-col p {
+
+            line-height: 1.9;
+
+            margin: 0;
+            text-align: justify;
+        }
+
+        .smart-image-col {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+        }
+
+        .rolex-smart-container.is-visible .smart-image-col {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-pill {
+            width: 100%;
+            max-width: 420px;
+            aspect-ratio: 1 / 1.6;
+
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .image-pill img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 2s ease;
+        }
+
+        .rolex-smart-container.is-visible .image-pill img {
+            transform: scale(1);
+        }
+
+        .image-pill:hover img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 1024px) {
+            .smart-grid {
+                gap: 40px;
+            }
+
+
+        }
+
+        @media (max-width: 768px) {
+            .rolex-smart-container {
+                padding: 0px 0px 60px;
+            }
+
+            .smart-grid {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .smart-text-col {
+                transform: translateY(30px);
+            }
+
+            .smart-text-col h2 {
+                font-size: 2rem;
+            }
+
+            .smart-text-col .lead-text {
+
+                text-align: justify;
+            }
+
+            .smart-image-col {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .image-pill {
+                max-width: 100%;
+                aspect-ratio: 16 / 9;
+
+            }
+        }
+
+        /* =========================================
+       SECTION: BOUTIQUE FEATURE MENU (REASONS)
+       ========================================= */
+
+        .rolex-reasons-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            /* Soft contrast against pure white sections */
+            padding: 20px 0px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .reasons-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+        }
+
+        .reasons-header .overline {
+            color: #212529;
+
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .reasons-header h2 {
+
+
+            line-height: 1.2;
+            color: #222;
+            margin: 0;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .rolex-reasons-container.is-visible .reasons-header .overline,
+        .rolex-reasons-container.is-visible .reasons-header h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reasons-body {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Left Side: Towering Elegance Image */
+        .reasons-image-box {
+            flex: 1;
+            position: relative;
+            height: 650px;
+
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            clip-path: inset(100% 0 0 0);
+            /* Bottom-up cinematic wipe */
+            transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1) 0.3s;
+        }
+
+        .rolex-reasons-container.is-visible .reasons-image-box {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .reasons-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 2.5s ease 0.3s;
+        }
+
+        .rolex-reasons-container.is-visible .reasons-image-box img {
+            transform: scale(1);
+        }
+
+        /* Right Side: The Animated List */
+        .reasons-list-box {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .reason-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 35px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+            cursor: default;
+        }
+
+        /* Staggered text fade in */
+        .rolex-reasons-container.is-visible .reason-item:nth-child(1) {
+            transition-delay: 0.4s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(2) {
+            transition-delay: 0.6s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(3) {
+            transition-delay: 0.8s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(4) {
+            transition-delay: 1.0s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(5) {
+            transition-delay: 1.2s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The Animated Golden Line */
+        .reason-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 1px;
+            width: 0;
+            /* Starts at 0 width */
+            background-color: #212529;
+            transition: width 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Draws the line when scrolled into view */
+        .rolex-reasons-container.is-visible .reason-item::after {
+            width: 100%;
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(1)::after {
+            transition-delay: 0.4s;
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(2)::after {
+            transition-delay: 0.6s;
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(3)::after {
+            transition-delay: 0.8s;
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(4)::after {
+            transition-delay: 1.0s;
+        }
+
+        .rolex-reasons-container.is-visible .reason-item:nth-child(5)::after {
+            transition-delay: 1.2s;
+        }
+
+        .reason-number {
+
+
+            color: #212529;
+            width: 70px;
+
+            transition: color 0.4s ease;
+        }
+
+        .reason-text {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            flex: 1;
+            font-weight: 400;
+        }
+
+        .reason-arrow {
+            font-size: 1.5rem;
+            color: #c8b08e;
+            opacity: 0;
+            transform: translateX(-15px);
+            transition: all 0.4s ease;
+        }
+
+        /* Hover Effects */
+        .reason-item:hover .reason-number {
+            color: #222;
+        }
+
+        .reason-item:hover .reason-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Final Closing Paragraph */
+        .reasons-footer {
+            max-width: 900px;
+            margin: 80px auto 0 auto;
+            text-align: center;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #555;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 1.4s;
+        }
+
+        .rolex-reasons-container.is-visible .reasons-footer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .reasons-body {
+                gap: 40px;
+            }
+
+            .reasons-image-box {
+                height: 500px;
+            }
+
+            .reasons-header h2 {
+                font-size: 2rem;
+            }
+
+            .reason-text {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-reasons-container {
+                padding: 20px 15px 40px;
+            }
+
+            .reasons-header h2 {
+                font-size: 2rem;
+            }
+
+            .reasons-body {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .reasons-image-box {
+                width: 100%;
+                height: 400px;
+            }
+
+            .reason-item {
+                padding: 25px 0;
+            }
+
+            .reason-number {
+                font-size: 1.5rem;
+                width: 50px;
+            }
+
+            .reason-text {
+                font-size: 1rem;
+            }
+
+            .reasons-footer {
+                font-size: 1.05rem;
+                margin-top: 60px;
+            }
+        }
+
+        /* =========================================
+       SECTION: THE PROMISE & AUTHENTICATION DOSSIER
+       ========================================= */
+
+        .rolex-promise-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 60px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .promise-grid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Left Side: The Narrative */
+        .promise-text-col {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rolex-promise-container.is-visible .promise-text-col {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .promise-text-col .overline {
+            color: #c8b08e;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #c8b08e;
+            padding-bottom: 5px;
+        }
+
+        .promise-text-col h2 {
+
+
+            line-height: 1.15;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+
+        }
+
+        .promise-text-col p {
+
+            line-height: 1.9;
+
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .promise-footer-text {
+
+            color: #222 !important;
+            font-style: italic;
+            border-left: 3px solid #212529;
+            padding-left: 20px;
+            margin-top: 40px !important;
+        }
+
+        /* Right Side: The Dark Authentication Dossier */
+        .promise-dossier-col {
+            flex: 1.1;
+        }
+
+        .dossier-card {
+            background-color: #1a1a1a;
+            /* Deep premium contrast */
+
+            padding: 50px 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            border-top: 4px solid #212529;
+            /* Gold accent line */
+            position: relative;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+        }
+
+        .rolex-promise-container.is-visible .dossier-card {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dossier-card h3 {
+
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* The Checklist */
+        .dossier-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dossier-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(200, 176, 142, 0.2);
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.5s ease;
+        }
+
+        .dossier-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        /* Staggered Checklist Animation */
+        .rolex-promise-container.is-visible .dossier-item:nth-child(1) {
+            transition-delay: 0.5s;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .rolex-promise-container.is-visible .dossier-item:nth-child(2) {
+            transition-delay: 0.7s;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .rolex-promise-container.is-visible .dossier-item:nth-child(3) {
+            transition-delay: 0.9s;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .rolex-promise-container.is-visible .dossier-item:nth-child(4) {
+            transition-delay: 1.1s;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .rolex-promise-container.is-visible .dossier-item:nth-child(5) {
+            transition-delay: 1.3s;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Interactive Hover Slide */
+        .dossier-item:hover {
+            transform: translateX(10px);
+        }
+
+        .dossier-icon {
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .dossier-item .dossier-text {
+            color: #eaeaea;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .promise-grid {
+                flex-direction: column;
+                gap: 50px;
+            }
+
+            .promise-text-col h2 {
+                font-size: 2rem;
+            }
+
+            .promise-text-col {
+                text-align: center;
+            }
+
+            .promise-footer-text {
+                border-left: none;
+                padding-left: 0;
+                border-top: 2px solid #c8b08e;
+                padding-top: 20px;
+            }
+
+            .promise-dossier-col {
+                width: 100%;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-promise-container {
+                padding: 60px 15px;
+            }
+
+            .promise-text-col h2 {
+                font-size: 2rem;
+            }
+
+            .dossier-card {
+                padding: 40px 25px;
+            }
+
+            .dossier-card h3 {
+                font-size: 1.5rem;
+                text-align: center;
+            }
+
+            .dossier-text {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* =========================================
+           SECTION: COLLECTOR'S VAULT (HOVER ACCORDION)
+           ========================================= */
+
+        .rolex-models-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            padding: 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .models-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+        }
+
+        .models-header .overline {
+            color: #212529;
+
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .models-header h2 {
+
+
+            line-height: 1.2;
+
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .models-header p {
+
+            line-height: 1.9;
+
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+            text-align: justify;
+        }
+
+        .rolex-models-container.is-visible .models-header .overline,
+        .rolex-models-container.is-visible .models-header h2,
+        .rolex-models-container.is-visible .models-header p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The Interactive Accordion Gallery */
+        .models-gallery {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 550px;
+            margin: 0 auto;
+            gap: 15px;
+        }
+
+        .model-card {
+            position: relative;
+            flex: 1;
+            /* Slim default state */
+
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        /* Staggered Load Animation */
+        .rolex-models-container.is-visible .model-card:nth-child(1) {
+            transition-delay: 0.3s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-models-container.is-visible .model-card:nth-child(2) {
+            transition-delay: 0.4s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-models-container.is-visible .model-card:nth-child(3) {
+            transition-delay: 0.5s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-models-container.is-visible .model-card:nth-child(4) {
+            transition-delay: 0.6s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-models-container.is-visible .model-card:nth-child(5) {
+            transition-delay: 0.7s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The Expand Effect */
+        .model-card:hover {
+            flex: 5;
+        }
+
+        .model-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+            /* Dimmed when closed */
+            transition: all 0.7s ease;
+        }
+
+        .model-card:hover .model-img {
+            filter: brightness(0.9);
+            /* Brightens when expanded */
+            transform: scale(1.05);
+        }
+
+        /* Golden Number at the bottom of unexpanded cards */
+        .model-index {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            font-size: 1.5rem;
+            color: #ffffff;
+            transition: all 0.4s ease;
+            z-index: 2;
+        }
+
+        .model-card:hover .model-index {
+            opacity: 0;
+            transform: translate(-50%, 20px);
+        }
+
+        /* Text Content (Hidden until expanded) */
+        .model-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 60px 30px 30px 30px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .model-card:hover .model-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+            /* Waits for the card to expand before showing text */
+        }
+
+        .model-content h3 {
+
+            font-size: 2rem;
+            color: #ffffff;
+            margin: 0 0 10px 0;
+            white-space: nowrap;
+        }
+
+        .model-content p {
+            font-size: 1rem;
+            color: #ffffff;
+            margin: 0;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .models-footer {
+            text-align: center;
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #555;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 1s;
+        }
+
+        .rolex-models-container.is-visible .models-footer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .models-gallery {
+                height: 450px;
+            }
+
+            .models-header h2 {
+                font-size: 2rem;
+            }
+
+            .model-content h3 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-models-container {
+                padding: 40px 15px;
+            }
+
+            .models-header h2 {
+                font-size: 2rem;
+            }
+
+            .models-gallery {
+                flex-direction: column;
+                /* Stacks vertically for touch devices */
+                height: auto;
+                gap: 20px;
+            }
+
+            .model-card {
+                height: 250px;
+                /* Fixed height for mobile */
+                flex: none;
+            }
+
+            .model-card:hover {
+                flex: none;
+            }
+
+            .model-img {
+                filter: brightness(0.8);
+            }
+
+            .model-index {
+                display: none;
+            }
+
+            /* Hide number on mobile */
+            .model-content {
+                opacity: 1;
+                /* Always show text on mobile */
+                transform: translateY(0);
+                padding: 40px 20px 20px 20px;
+            }
+
+            .model-content h3 {
+                font-size: 1.6rem;
+                white-space: normal;
+            }
+
+            .model-content p {
+                white-space: normal;
+                line-height: 1.5;
+            }
+
+            .models-footer {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* =========================================
+           SECTION: THE PEACE OF MIND VAULT (DARK GRID)
+           ========================================= */
+
+        .rolex-peace-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0a0a0a;
+            /* Deep premium black */
+            color: #ffffff;
+            padding: 20px 20px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid #222;
+        }
+
+        /* Abstract Golden Spotlight Background Glow */
+        .rolex-peace-container::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(200, 176, 142, 0.1) 0%, rgba(0, 0, 0, 0) 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .peace-header {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+        }
+
+        .peace-header h2 {
+
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .peace-header p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+            text-align: justify;
+        }
+
+        .peace-subheader {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(200, 176, 142, 0.3);
+            display: inline-block;
+            padding-bottom: 10px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        .rolex-peace-container.is-visible .peace-header h2,
+        .rolex-peace-container.is-visible .peace-header p,
+        .rolex-peace-container.is-visible .peace-subheader {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+     /* =========================================
+   SECTION: THE PEACE OF MIND VAULT (ONE ROW)
+   ========================================= */
+
+.rolex-peace-container {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    padding: 20px 20px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #222;
+}
+
+/* Background Glow */
+.rolex-peace-container::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle,
+            rgba(200, 176, 142, 0.1) 0%,
+            rgba(0, 0, 0, 0) 60%);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* HEADER */
+.peace-header {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto 60px auto;
+}
+
+.peace-header h2 {
+    font-size: 3rem;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.peace-header p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: #b0b0b0;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease 0.2s;
+    text-align: justify;
+}
+
+.peace-subheader {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(200, 176, 142, 0.3);
+    display: inline-block;
+    padding-bottom: 10px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease 0.4s;
+}
+
+.rolex-peace-container.is-visible .peace-header h2,
+.rolex-peace-container.is-visible .peace-header p,
+.rolex-peace-container.is-visible .peace-subheader {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   ONE ROW GRID
+   ========================================= */
+
+.peace-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* RESET OLD GRID POSITION */
+.peace-card:nth-child(1),
+.peace-card:nth-child(2),
+.peace-card:nth-child(3),
+.peace-card:nth-child(4),
+.peace-card:nth-child(5) {
+    grid-column: auto;
+}
+
+/* CARD */
+.peace-card {
+    background-color: #121212;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 40px 25px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    min-height: 240px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    transform: translateY(40px);
+
+    transition:
+        all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* HOVER */
+.peace-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(200, 176, 142, 0.5);
+    box-shadow: 0 15px 40px rgba(200, 176, 142, 0.08);
+    background-color: #151515;
+}
+
+/* ANIMATION */
+.rolex-peace-container.is-visible .peace-card:nth-child(1) {
+    transition-delay: 0.2s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rolex-peace-container.is-visible .peace-card:nth-child(2) {
+    transition-delay: 0.4s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rolex-peace-container.is-visible .peace-card:nth-child(3) {
+    transition-delay: 0.6s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rolex-peace-container.is-visible .peace-card:nth-child(4) {
+    transition-delay: 0.8s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rolex-peace-container.is-visible .peace-card:nth-child(5) {
+    transition-delay: 1s;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* BACKGROUND NUMBER */
+.peace-card::before {
+    content: attr(data-number);
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 6rem;
+    color: rgba(255, 255, 255, 0.03);
+    z-index: 0;
+    transition: color 0.4s ease;
+}
+
+.peace-card:hover::before {
+    color: rgba(200, 176, 142, 0.06);
+}
+
+/* ICON */
+.peace-icon {
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+/* TEXT */
+.peace-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #eaeaea;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* FOOTER */
+.peace-footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    margin: 40px auto 0 auto;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease 1.2s;
+}
+
+.peace-footer p {
+    color: #ffffff;
+}
+
+.rolex-peace-container.is-visible .peace-footer {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1200px) {
+
+    .peace-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .peace-card {
+        min-height: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+
+    .peace-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .peace-card:nth-child(5) {
+        grid-column: 1 / 3;
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .peace-header h2 {
+        font-size: 2rem;
+    }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .rolex-peace-container {
+        padding: 20px 15px;
+    }
+
+    .peace-header h2 {
+        font-size: 2rem;
+    }
+
+    .peace-header p {
+        font-size: 1rem;
+    }
+
+    .peace-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .peace-card {
+        min-height: auto;
+        padding: 35px 25px;
+    }
+
+    .peace-card:nth-child(5) {
+        grid-column: auto;
+        max-width: 100%;
+    }
+
+    .peace-footer {
+        font-size: 1.2rem;
+    }
+}
+        /* =========================================
+           SECTION: INVESTMENT PORTFOLIO TICKER
+           ========================================= */
+
+        .rolex-investment-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 20px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .investment-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Top Header */
+        .investment-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 50px auto;
+        }
+
+        .investment-header .overline {
+            color: #212529;
+
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .investment-header h2 {
+
+
+            line-height: 1.2;
+
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .investment-header p {
+
+            line-height: 1.9;
+
+            margin: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+            text-align: justify;
+        }
+
+        .rolex-investment-container.is-visible .investment-header .overline,
+        .rolex-investment-container.is-visible .investment-header h2,
+        .rolex-investment-container.is-visible .investment-header p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .investment-grid-title {
+
+            font-size: 2rem;
+            color: #222;
+            text-align: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        .rolex-investment-container.is-visible .investment-grid-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 2px solid #212529;
+            border-bottom: 2px solid #212529;
+        }
+
+        /* Individual Benefit Node */
+        .investment-node {
+            padding: 30px 30px;
+            border-right: 1px solid rgba(200, 176, 142, 0.3);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .investment-node:last-child {
+            border-right: none;
+        }
+
+        /* Staggered entry for the 4 nodes */
+        .rolex-investment-container.is-visible .investment-node:nth-child(1) {
+            transition-delay: 0.7s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-investment-container.is-visible .investment-node:nth-child(2) {
+            transition-delay: 0.9s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-investment-container.is-visible .investment-node:nth-child(3) {
+            transition-delay: 1.1s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-investment-container.is-visible .investment-node:nth-child(4) {
+            transition-delay: 1.3s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* "Rising Chart" Hover Background */
+        .investment-node::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #212529;
+            /* Solid Gold */
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+
+        .investment-node:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* Inner Text Elements */
+        .investment-icon {
+            font-size: 2rem;
+            color: #212529;
+            margin-bottom: 20px;
+            display: block;
+            transition: all 0.5s ease;
+        }
+
+        .investment-node h3 {
+
+            font-size: 1.4rem;
+            line-height: 1.3;
+            color: #222;
+            margin-top: 0;
+            margin-bottom: 15px;
+            transition: color 0.4s ease;
+        }
+
+        .investment-node p {
+
+            line-height: 1.7;
+
+            margin: 0;
+            transition: color 0.4s ease;
+        }
+
+        /* Hover Transitions for text & icon */
+        .investment-node:hover h3,
+        .investment-node:hover p {
+            color: #ffffff;
+            /* Turns white over the gold background */
+        }
+
+        .investment-node:hover .investment-icon {
+            color: #ffffff;
+            transform: translate(8px, -8px);
+            /* Shoots up and to the right */
+        }
+
+        /* Footer */
+        .investment-footer {
+            text-align: center;
+            margin-top: 60px;
+
+            line-height: 1.9;
+            color: #222;
+            font-weight: 500;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 1.5s;
+        }
+
+        .rolex-investment-container.is-visible .investment-footer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .investment-header h2 {
+                font-size: 2rem;
+            }
+
+            .investment-grid {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2x2 Grid on tablet */
+                border-bottom: none;
+            }
+
+            .investment-node {
+                border-bottom: 1px solid rgba(200, 176, 142, 0.3);
+            }
+
+            .investment-node:nth-child(2) {
+                border-right: none;
+            }
+
+            /* Removes right border for 2nd item */
+            .investment-node:nth-child(4) {
+                border-right: none;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-investment-container {
+                padding: 40px 0px;
+            }
+
+            .investment-header h2 {
+                font-size: 2rem;
+            }
+
+            .investment-grid-title {
+                font-size: 1.6rem;
+            }
+
+            .investment-grid {
+                grid-template-columns: 1fr;
+                /* Stacked on mobile */
+                border-top: 2px solid #c8b08e;
+            }
+
+            .investment-node {
+                border-right: none;
+                padding: 20px 20px;
+            }
+
+            .investment-footer {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* =========================================
+           SECTION: STICKY STACKING CARDS (TRUST & AUTHENTICITY)
+           ========================================= */
+
+        .rolex-stack-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            /* Subtle grey to make the white cards pop */
+            padding: 20px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .stack-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+        }
+
+        .stack-header .overline {
+            color: #212529;
+
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .stack-header h2 {
+
+
+            line-height: 1.2;
+            color: #222;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .stack-header p {
+
+            line-height: 1.9;
+
+            margin: 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+
+        }
+
+        .stack-subhead {
+            text-align: center;
+
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 20px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        /* Initial Fade Ins */
+        .rolex-stack-container.is-visible .stack-header .overline,
+        .rolex-stack-container.is-visible .stack-header h2,
+        .rolex-stack-container.is-visible .stack-header p,
+        .rolex-stack-container.is-visible .stack-subhead {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The Sticky Stacking Magic */
+        .stack-cards-wrapper {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .stack-card {
+            position: sticky;
+            width: 100%;
+            min-height: 240px;
+            margin-bottom: 80px;
+            /* Forces scroll distance between cards */
+
+            box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.06);
+            /* Shadow casts UP onto previous card */
+            border-top: 3px solid #212529;
+            /* The exposed gold tab line */
+            display: flex;
+            align-items: center;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        .stack-card:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Staggered Sticky Offsets & Colors */
+        .card-1 {
+            top: 100px;
+            z-index: 1;
+            background-color: #1a1a1a;
+        }
+
+        .card-2 {
+            top: 120px;
+            z-index: 2;
+            background-color: #fcfbfa;
+        }
+
+        .card-3 {
+            top: 140px;
+            z-index: 3;
+            background-color: #1a1a1a;
+        }
+
+        .card-4 {
+            top: 160px;
+            z-index: 4;
+            background-color: #fcfbfa;
+        }
+
+        .card-5 {
+            top: 180px;
+            z-index: 5;
+            background-color: #1a1a1a;
+        }
+
+        /* Dramatic Dark Mode Closer */
+
+        .stack-card-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+        }
+
+        .stack-num {
+
+            font-size: 6rem;
+            line-height: 1;
+            color: #212529;
+            font-weight: 500;
+        }
+
+        .stack-card-content p {
+            font-size: 1.6rem;
+            line-height: 1.5;
+            color: #222;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        /* Dark Mode overrides for the 5th card */
+        .card-5 .stack-card-content p,
+        .card-1 .stack-card-content p,
+        .card-3 .stack-card-content p {
+            color: #ffffff;
+        }
+
+        .card-5 .stack-num,
+        .card-1 .stack-num,
+        .card-3 .stack-num {
+            color: #ffffff;
+        }
+
+        .stack-footer {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 0 auto;
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: #555;
+            font-style: italic;
+            border-top: 1px solid rgba(200, 176, 142, 0.3);
+            padding-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.8s;
+        }
+
+        .rolex-stack-container.is-visible .stack-footer {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .stack-header h2 {
+                font-size: 2rem;
+            }
+
+            .stack-subhead {
+                font-size: 1.8rem;
+            }
+
+            .stack-card {
+                padding: 40px;
+                min-height: 200px;
+            }
+
+            .stack-card-content p {
+                font-size: 1.4rem;
+            }
+
+            .stack-num {
+                font-size: 4.5rem;
+                gap: 30px;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-stack-container {
+                padding: 20px 15px;
+            }
+
+            .stack-header h2 {
+                font-size: 2rem;
+            }
+
+            .stack-header p {
+                font-size: 1.05rem;
+            }
+
+            .stack-subhead {
+                font-size: 1.5rem;
+                margin-bottom: 50px;
+            }
+
+            .stack-card {
+                padding: 30px 20px;
+                min-height: 160px;
+                margin-bottom: 50px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stack-card-content {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .stack-num {
+                font-size: 3rem;
+            }
+
+            .stack-card-content p {
+                font-size: 1.15rem;
+            }
+
+            /* Adjusted sticky offsets for mobile viewports */
+            .card-1 {
+                top: 80px;
+            }
+
+            .card-2 {
+                top: 95px;
+            }
+
+            .card-3 {
+                top: 110px;
+            }
+
+            .card-4 {
+                top: 125px;
+            }
+
+            .card-5 {
+                top: 140px;
+            }
+
+            .stack-footer {
+                font-size: 1.05rem;
+                margin-top: 0px;
+                padding-top: 30px;
+            }
+        }
+
+        /* =========================================
+           SECTION: EXPANDING SPLIT-SCREEN MONOLITH
+           ========================================= */
+
+        .rolex-split-container {
+            display: flex;
+            width: 100%;
+            height: 90vh;
+            min-height: 700px;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* The Interactive Panels */
+        .split-panel {
+            position: relative;
+            flex: 1;
+            /* Both start at 50% width */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: flex 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: default;
+        }
+
+        /* The Hover Expansion Magic */
+        .rolex-split-container:hover .split-panel:hover {
+            flex: 1.4;
+            /* Expands the hovered side */
+        }
+
+        .rolex-split-container:hover .split-panel:not(:hover) {
+            flex: 0.6;
+            /* Shrinks the un-hovered side */
+        }
+
+        /* Background Images */
+        .split-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transform: scale(1.1);
+            transition: transform 1.5s ease;
+        }
+
+        .split-panel:hover .split-bg {
+            transform: scale(1.02);
+            /* Slight zoom-out on hover for depth */
+        }
+
+        /* Inner Content Wrapper */
+        .split-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 600px;
+            /* Keeps text constrained even when panel expands */
+            padding: 40px 60px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .rolex-split-container.is-visible .split-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Panel 1: Dark Mode (Care) --- */
+        .split-panel.care-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 15, 15, 0.88);
+            /* Deep dark overlay */
+            z-index: 1;
+            transition: background 0.8s ease;
+        }
+
+        .split-panel.care-panel:hover::before {
+            background: rgba(15, 15, 15, 0.75);
+        }
+
+        .care-panel .overline {
+            color: #c8b08e;
+        }
+
+        .care-panel h2 {
+            color: #ffffff;
+        }
+
+        .care-panel p {
+            color: #cccccc;
+        }
+
+        .care-panel .split-list li {
+            color: #eaeaea;
+        }
+
+        .care-panel .split-footer {
+            border-color: rgba(200, 176, 142, 0.3);
+            color: #ffffff;
+        }
+
+        /* --- Panel 2: Light Mode (Perfect Match) --- */
+        .split-panel.match-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.92);
+            /* Crisp white overlay */
+            z-index: 1;
+            transition: background 0.8s ease;
+        }
+
+        .split-panel.match-panel:hover::before {
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        .match-panel .overline {
+            color: #c8b08e;
+        }
+
+        .match-panel h2 {
+            color: #222222;
+        }
+
+        .match-panel p {
+            color: #555555;
+        }
+
+        .match-panel .split-list li {
+            color: #333333;
+        }
+
+        .match-panel .split-footer {
+            border-color: #eaeaea;
+            color: #222222;
+        }
+
+        /* Typography & List Resets */
+        /* Typography & Interactive Hide/Show Magic */
+        .split-content .overline {
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .split-content h2 {
+
+            font-size: 2rem;
+            line-height: 1.15;
+            margin-top: 0;
+            margin-bottom: 0;
+            /* Removed default margin so it looks perfectly centered when closed */
+            font-weight: 400;
+            transition: margin-bottom 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* The hidden content wrapper */
+        .split-hover-content {
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Triggers the expansion on hover */
+        .split-panel:hover .split-content h2 {
+            margin-bottom: 20px;
+            /* Adds breathing room back when open */
+        }
+
+        .split-panel:hover .split-hover-content {
+            opacity: 1;
+            max-height: 800px;
+            /* Safely fits all the content */
+        }
+
+        .split-content .intro {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        /* STRICT LIST RESET */
+        .split-list {
+            list-style: none !important;
+            list-style-type: none !important;
+            padding: 0 !important;
+            margin: 0 0 40px 0 !important;
+        }
+
+        .split-list li {
+            display: flex;
+            align-items: flex-start;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        /* The SVG Checkmark */
+        .split-list svg {
+            width: 20px;
+            height: 20px;
+            color: #c8b08e;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .split-footer {
+            font-size: 1rem;
+            line-height: 1.7;
+            font-style: italic;
+            border-top: 1px solid;
+            padding-top: 25px;
+            margin: 0;
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .split-content {
+                padding: 40px;
+            }
+
+            .split-content h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-split-container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .split-panel {
+                flex: none;
+                width: 100%;
+                min-height: auto;
+                /* Allow natural height on mobile */
+            }
+
+            .rolex-split-container:hover .split-panel:hover,
+            .rolex-split-container:hover .split-panel:not(:hover) {
+                flex: none;
+            }
+
+            .split-content {
+                padding: 60px 25px;
+            }
+
+            .split-content h2 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+
+            .split-content .intro,
+            .split-list li,
+            .split-footer {
+                font-size: 0.95rem;
+            }
+
+            /* Always show content on mobile to ensure it's readable without hover */
+            .split-hover-content {
+                opacity: 1;
+                max-height: 1000px;
+            }
+        }
+
+        /* =========================================
+           SECTION: EDITORIAL DUAL-COLUMN FAQ
+           ========================================= */
+
+        .rolex-faq-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            /* Requested pure white background */
+            padding: 40px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .faq-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Animation */
+        .faq-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px auto;
+        }
+
+        .faq-header .overline {
+            color: #212529;
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .faq-header h2 {
+
+            font-size: 3rem;
+            line-height: 1.2;
+            color: #222;
+            margin: 0;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .rolex-faq-container.is-visible .faq-header .overline,
+        .rolex-faq-container.is-visible .faq-header h2 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 2-Column Grid Layout */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 60px;
+            /* Space between the two columns */
+            align-items: start;
+        }
+
+        /* Individual FAQ Items */
+        .faq-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Staggered entrance animations */
+        .rolex-faq-container.is-visible .faq-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .rolex-faq-container.is-visible .faq-col-1 .faq-item:nth-child(1) {
+            transition-delay: 0.2s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-1 .faq-item:nth-child(2) {
+            transition-delay: 0.3s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-1 .faq-item:nth-child(3) {
+            transition-delay: 0.4s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-1 .faq-item:nth-child(4) {
+            transition-delay: 0.5s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-1 .faq-item:nth-child(5) {
+            transition-delay: 0.6s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-2 .faq-item:nth-child(1) {
+            transition-delay: 0.3s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-2 .faq-item:nth-child(2) {
+            transition-delay: 0.4s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-2 .faq-item:nth-child(3) {
+            transition-delay: 0.5s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-2 .faq-item:nth-child(4) {
+            transition-delay: 0.6s;
+        }
+
+        .rolex-faq-container.is-visible .faq-col-2 .faq-item:nth-child(5) {
+            transition-delay: 0.7s;
+        }
+
+        /* The Question Row */
+        .faq-question {
+            display: flex;
+            align-items: center;
+            padding: 25px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .faq-question:hover .faq-text {
+            color: #212529;
+        }
+
+        .faq-num {
+
+            font-size: 1.1rem;
+            color: #212529;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+
+        .faq-text {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #222;
+            font-weight: 500;
+            flex: 1;
+            padding-right: 20px;
+            transition: color 0.3s ease;
+        }
+
+        /* The Animated Plus/Cross Icon */
+        .faq-toggle {
+            position: relative;
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .faq-toggle::before,
+        .faq-toggle::after {
+            content: '';
+            position: absolute;
+            background-color: #222;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .faq-toggle::before {
+            top: 6px;
+            left: 0;
+            width: 14px;
+            height: 2px;
+        }
+
+        .faq-toggle::after {
+            top: 0;
+            left: 6px;
+            width: 2px;
+            height: 14px;
+        }
+
+        /* The Hidden Answer */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .faq-answer p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+
+            margin: 0;
+            padding-bottom: 25px;
+            padding-left: 45px;
+            /* Aligns with the text, skipping the number */
+        }
+
+        /* Active/Open States */
+        .faq-item.is-open .faq-answer {
+            max-height: 200px;
+            /* Expands smoothly */
+        }
+
+        .faq-item.is-open .faq-toggle::after {
+            transform: rotate(90deg);
+            /* Turns the Plus into a Minus */
+        }
+
+        .faq-item.is-open .faq-text {
+            color: #212529;
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .faq-grid {
+                gap: 0 30px;
+            }
+
+            .faq-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .rolex-faq-container {
+                padding: 60px 15px;
+            }
+
+            .faq-header h2 {
+                font-size: 2rem;
+            }
+
+            .faq-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            /* Drops to a single column */
+            .faq-text {
+                font-size: 1rem;
+            }
+
+            .faq-answer p {
+                font-size: 0.95rem;
+                padding-left: 0;
+            }
+
+            /* Resets padding on mobile */
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="rolex-trust-container" id="trust-trigger">
+
+        <div class="trust-hero-split">
+            <div class="trust-title-col">
+                <span class="overline">Jay's Watch Store</span>
+                <h1>India’s Trusted Destination for Certified Pre-Owned Rolex Watches</h1>
+            </div>
+            <div class="trust-intro-col">
+                <p>Luxury watches are no longer just symbols of status; they represent heritage, craftsmanship, and
+                    intelligent investment. Among all luxury watch brands, Rolex continues to dominate global demand.
+                    Today, pre-owned Rolex watches are the preferred choice for collectors and discerning buyers who
+                    want authenticity, exclusivity, and long-term value—without the challenges of retail pricing or
+                    extended waiting periods.</p>
+            </div>
+        </div>
+
+        <div class="trust-visual-break">
+            <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1600&auto=format&fit=crop"
+                alt="Pre-Owned Rolex Details">
+        </div>
+
+
+
+    </section>
+
+
+
+
+
+
+    <section class="rolex-models-container" id="models-trigger">
+
+        <div class="models-header">
+            <span class="overline">Curated Excellence</span>
+            <h2>Timeless Pre-Owned Rolex Models That Hold Their Value</h2>
+            <p>Certain Rolex models are timeless icons and remain in constant demand. Many collectors prefer buying
+                these models pre-owned due to better pricing and availability.</p>
+        </div>
+
+        <div class="models-gallery">
+
+            <div class="model-card">
+                <img src="https://w0.peakpx.com/wallpaper/811/730/HD-wallpaper-rolex-water-background-watch-submariner.jpg"
+                    class="model-img" alt="Rolex Submariner">
+                <span class="model-index">01</span>
+                <div class="model-content">
+                    <h3>Rolex Submariner</h3>
+                    <p>The ultimate luxury dive watch</p>
+                </div>
+            </div>
+
+            <div class="model-card">
+                <img src="https://i.pinimg.com/736x/b8/8b/57/b88b57acf3a8045c55a14568df7f6a99.jpg"
+                    class="model-img" alt="Rolex Datejust">
+                <span class="model-index">02</span>
+                <div class="model-content">
+                    <h3>Rolex Datejust</h3>
+                    <p>A classic for daily elegance</p>
+                </div>
+            </div>
+
+            <div class="model-card">
+                <img src="https://i.pinimg.com/474x/65/2d/e3/652de38ef70e69ebdbc307ca055060da.jpg"
+                    class="model-img" alt="Rolex GMT-Master II">
+                <span class="model-index">03</span>
+                <div class="model-content">
+                    <h3>Rolex GMT-Master II</h3>
+                    <p>Ideal for frequent travelers</p>
+                </div>
+            </div>
+
+            <div class="model-card">
+                <img src="https://i.pinimg.com/564x/4a/98/1c/4a981c53dfc52e2c2d82565c2bb291c2.jpg"
+                    class="model-img" alt="Rolex Daytona">
+                <span class="model-index">04</span>
+                <div class="model-content">
+                    <h3>Rolex Daytona</h3>
+                    <p>Highly collectible and investment-driven</p>
+                </div>
+            </div>
+
+            <div class="model-card">
+                <img src="https://www.dicksonwatch.com/wp-content/uploads/2024/05/rolex-watches-explorer-m124273-0001_2210jva_001-portrait.jpg"
+                    class="model-img" alt="Rolex Explorer">
+                <span class="model-index">05</span>
+                <div class="model-content">
+                    <h3>Rolex Explorer</h3>
+                    <p>Understated luxury with robust performance</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="models-footer">
+            <p>At Jay’s Watch Store, our curated inventory focuses on the most desirable Rolex
+                references for collectors and first-time buyers alike.</p>
+        </div>
+
+    </section>
+
+    <section class="rolex-peace-container" id="peace-trigger">
+
+        <div class="peace-header">
+            <h2>Own a Certified Pre-Owned Rolex Online in India with Complete Peace of Mind</h2>
+            <p>The Indian luxury watch market has evolved significantly, and buyers today prefer trusted specialists
+                over general marketplaces. Jay’s Watch Store is a destination for those who want to buy pre-owned Rolex
+                watches in India securely and transparently.</p>
+            <span class="peace-subheader">What You Can Expect When Buying from Jay’s</span>
+        </div>
+
+        <div class="peace-grid">
+
+            <div class="peace-card" data-number="01">
+                <svg class="peace-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                    </path>
+                </svg>
+                <p>100% genuine and certified Rolex watches</p>
+            </div>
+
+            <div class="peace-card" data-number="02">
+                <svg class="peace-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                    </path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <p>High-resolution images of actual products</p>
+            </div>
+
+            <div class="peace-card" data-number="03">
+                <svg class="peace-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z">
+                    </path>
+                </svg>
+                <p>Transparent pricing with no hidden charges</p>
+            </div>
+
+            <div class="peace-card" data-number="04">
+                <svg class="peace-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                    </path>
+                </svg>
+                <p>Secure payments and insured pan-India delivery</p>
+            </div>
+
+            <div class="peace-card" data-number="05">
+                <svg class="peace-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
+                    </path>
+                </svg>
+                <p>Expert guidance before and after purchase</p>
+            </div>
+
+        </div>
+
+        <div class="peace-footer">
+            <p>Our online buying experience is designed to be as refined as the watches we offer.</p>
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+    <section class="rolex-hero-container">
+        <div class="editorial-wrapper" id="story-trigger">
+
+            <div class="editorial-image-wrapper">
+                <img src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=1200&auto=format&fit=crop"
+                    alt="Detailed view of a luxury watch dial">
+            </div>
+
+            <div class="editorial-content">
+                <span class="overline">The Story of Rolex</span>
+                <h1>A Legacy of Excellence</h1>
+                <p>For over a century, Rolex has represented excellence, innovation, and precision in the world of
+                    luxury watchmaking. The journey began in 1905 in London when Hans Wilsdorf and Alfred Davis
+                    established a company called Wilsdorf & Davis.</p>
+                <p>In 1908, Wilsdorf introduced the name “Rolex,” choosing it for its simplicity, ease of pronunciation
+                    across languages, and suitability for watch dials. By 1920, the company had relocated to Geneva,
+                    Switzerland, where it officially became known as Montres Rolex S.A., laying the foundation for its
+                    enduring reputation in Swiss horology.</p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const storyTrigger = document.getElementById('story-trigger');
+            if (storyTrigger) observer.observe(storyTrigger);
+
+            const bentoTrigger = document.getElementById('bento-trigger');
+            if (bentoTrigger) observer.observe(bentoTrigger);
+
+            const ctaTrigger = document.getElementById('cta-trigger');
+            if (ctaTrigger) observer.observe(ctaTrigger);
+
+            const timelineObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-active');
+                    } else {
+                        entry.target.classList.remove('is-active');
+                    }
+                });
+            }, {
+                rootMargin: "-25% 0px -25% 0px",
+                threshold: 0
+            });
+
+            const timelineSteps = document.querySelectorAll('.js-step');
+            timelineSteps.forEach(step => timelineObserver.observe(step));
+
+            const trustTrigger = document.getElementById('trust-trigger');
+            if (trustTrigger) observer.observe(trustTrigger);
+
+            const smartTrigger = document.getElementById('smart-trigger');
+            if (smartTrigger) observer.observe(smartTrigger);
+
+            const reasonsTrigger = document.getElementById('reasons-trigger');
+            if (reasonsTrigger) observer.observe(reasonsTrigger);
+
+            const promiseTrigger = document.getElementById('promise-trigger');
+            if (promiseTrigger) observer.observe(promiseTrigger);
+
+            const modelsTrigger = document.getElementById('models-trigger');
+            if (modelsTrigger) observer.observe(modelsTrigger);
+
+            const peaceTrigger = document.getElementById('peace-trigger');
+            if (peaceTrigger) observer.observe(peaceTrigger);
+
+            const investmentTrigger = document.getElementById('investment-trigger');
+            if (investmentTrigger) observer.observe(investmentTrigger);
+
+            const authenticityTrigger = document.getElementById('authenticity-trigger');
+            if (authenticityTrigger) observer.observe(authenticityTrigger);
+
+            const splitTrigger = document.getElementById('split-trigger');
+            if (splitTrigger) observer.observe(splitTrigger);
+
+            const faqTrigger = document.getElementById('faq-trigger');
+            if (faqTrigger) observer.observe(faqTrigger);
+
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('is-open');
+
+                    // Optional: Un-comment the next 3 lines if you want only ONE item open at a time
+                    faqItems.forEach(i => {
+                        i.classList.remove('is-open');
+                    });
+
+                    if (!isOpen) {
+                        item.classList.add('is-open');
+                    } else {
+                        item.classList.remove('is-open');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

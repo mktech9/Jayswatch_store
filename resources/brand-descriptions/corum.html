@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre Owned Corum Watches at JWS | Distinctive Swiss Luxury</title>
+    <meta name="description"
+        content="Discover bold Pre Owned Corum Watches at JWS. Shop certified luxury Swiss timepieces, including Admiral and Golden Bridge classics.">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================
+       GLOBAL THEME SETUP
+       ========================================= */
+        body {
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* =========================================
+       CORUM SECTION 1: THE TRIPTYCH CENTERPIECE
+       ========================================= */
+        .corum-intro-container {
+            font-family: 'Montserrat', sans-serif;
+            padding-bottom: 30px;
+            background-color: #ffffff;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Massive, elegant centered typography */
+        .corum-title-wrapper {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 70px auto;
+        }
+
+        .corum-title-wrapper .overline {
+            color: #212529;
+            /* Consistent Gold Accent */
+
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .corum-title-wrapper h1 {
+
+
+            line-height: 1.1;
+            color: #222;
+            font-weight: 400;
+            margin: 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        /* Emphasize the Swiss Watchmaking part with italics */
+        .corum-title-wrapper h1 em {
+            font-style: italic;
+            color: #212529;
+        }
+
+        /* The 3-Column Triptych Grid */
+        .corum-triptych-grid {
+            display: grid;
+            grid-template-columns: 1fr 450px 1fr;
+            /* Text | Image | Text */
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        /* Left Text Column */
+        .triptych-text-left {
+            text-align: left;
+            /* Fixed: Aligned left so the Drop Cap flows properly */
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease 0.6s;
+        }
+
+        /* Right Text Column */
+        .triptych-text-right {
+            text-align: left;
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s ease 0.8s;
+        }
+
+        .triptych-text-left p,
+        .triptych-text-right p {
+
+            line-height: 1.9;
+
+            margin: 0;
+        }
+
+      
+
+        /* The Center Image Pillar */
+        .triptych-image-center {
+            position: relative;
+            height: 650px;
+
+            /* Elegant archway shape */
+            overflow: hidden;
+            /* Keeps the splash effect contained inside the arch */
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+            clip-path: inset(100% 0 0 0);
+            /* Bottom-up wipe */
+            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
+        }
+
+        .triptych-image-center img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 2s ease 0.4s;
+        }
+
+        .triptych-image-center:hover img {
+            transform: scale(1.15);
+        }
+
+        /* =========================================
+       DYNAMIC WATER SPRINKLER SPLASH EFFECT
+       ========================================= */
+        .splash-container {
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+            /* Hidden until container is visible */
+            transition: opacity 1s ease 1s;
+            /* Fades in after image settles */
+        }
+
+        .corum-intro-container.is-visible .splash-container {
+            opacity: 1;
+            /* Triggers the splash visibility */
+        }
+
+        .droplet {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, #c8b08e, #e8d7c0);
+            /* Shimmering gold droplet */
+            border-radius: 50% 50% 50% 0;
+            /* Tear-drop shape */
+            opacity: 0;
+        }
+
+        /* Keyframe animation making the droplets shoot up and fade out */
+        @keyframes sprinkler-fly {
+            0% {
+                transform: translate(0, 0) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(var(--dx), var(--dy)) rotate(var(--rot)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* --- General Animation Triggers --- */
+        .corum-intro-container.is-visible .corum-title-wrapper .overline,
+        .corum-intro-container.is-visible .corum-title-wrapper h1,
+        .corum-intro-container.is-visible .triptych-text-left,
+        .corum-intro-container.is-visible .triptych-text-right {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        .corum-intro-container.is-visible .triptych-image-center {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .corum-intro-container.is-visible .triptych-image-center img {
+            transform: scale(1);
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .corum-title-wrapper h1 {
+                font-size: 3rem;
+            }
+
+            .corum-triptych-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+
+            .triptych-image-center {
+                grid-column: 1 / 3;
+                grid-row: 1;
+                height: 500px;
+
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .corum-intro-container {
+                padding: 0px 15px 20px 15px;
+            }
+
+            .corum-title-wrapper h1 {
+                font-size: 2rem;
+            }
+
+            .corum-triptych-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .triptych-image-center {
+                grid-column: 1 / 2;
+                height: 450px;
+
+            }
+
+            .triptych-text-left,
+            .triptych-text-right {
+                text-align: left;
+            }
+
+
+        }
+
+        /* =========================================
+       CORUM SECTION 2: OFFSET FLOATING GALLERY
+       ========================================= */
+
+        .corum-icons-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fafafa;
+            /* Very subtle contrast from the pure white above */
+            padding: 20px 20px 50px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .icons-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px auto;
+        }
+
+        .icons-header h2 {
+
+
+            line-height: 1.2;
+            color: #222;
+            margin-bottom: 25px;
+            font-weight: 400;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .icons-header p {
+
+            line-height: 1.9;
+
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .corum-icons-container.is-visible .icons-header h2,
+        .corum-icons-container.is-visible .icons-header p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The 3-Column Offset Grid */
+        .icons-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Individual Gallery Card */
+        .gallery-card {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Staggered load in */
+        .corum-icons-container.is-visible .gallery-card:nth-child(1) {
+            transition-delay: 0.3s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .corum-icons-container.is-visible .gallery-card:nth-child(2) {
+            transition-delay: 0.5s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .corum-icons-container.is-visible .gallery-card:nth-child(3) {
+            transition-delay: 0.7s;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card Images */
+        .gallery-image-wrapper {
+            position: relative;
+            height: 450px;
+
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+        }
+
+        .gallery-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.5s ease;
+        }
+
+        .gallery-card:hover .gallery-image-wrapper img {
+            transform: scale(1.08);
+            /* Subtle zoom on hover */
+        }
+
+        /* Card Text Boxes (Overlapping the images) */
+        .gallery-text-box {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-top: 3px solid #212529 !important;
+            /* Gold accent line */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+            position: relative;
+            z-index: 2;
+            margin: -50px 20px 0 20px;
+            /* Pulls text box UP to overlap image */
+        }
+
+        .gallery-text-box h3 {
+
+
+            color: #222;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .gallery-text-box p {
+
+            line-height: 1.8;
+
+            margin: 0;
+        }
+
+        /* THE INVERSION TRICK: Middle Card is flipped */
+        .gallery-card.invert-card {
+            flex-direction: column-reverse;
+            /* Flips the flex order */
+            margin-top: 80px;
+            /* Pushes the whole middle column down */
+        }
+
+        .gallery-card.invert-card .gallery-text-box {
+            margin: 0 20px -50px 20px;
+            /* Pulls text box DOWN to overlap image */
+            border-top: none;
+            border-bottom: 3px solid #c8b08e;
+            padding-bottom: 60px;
+            /* Extra padding for the overlap */
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+
+
+            .icons-gallery-grid {
+                gap: 20px;
+            }
+
+            .gallery-text-box {
+                padding: 30px 20px;
+                margin: -40px 10px 0 10px;
+            }
+
+            .gallery-card.invert-card .gallery-text-box {
+                margin: 0 10px -40px 10px;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .corum-icons-container {
+                padding: 15px 15px 80px 15px;
+            }
+
+            .icons-header h2 {
+
+                text-align: center;
+            }
+
+            .icons-gallery-grid {
+                grid-template-columns: 1fr;
+                /* Stacks everything into 1 column */
+                gap: 60px;
+            }
+
+            /* Removes the inversion trick for mobile so they read naturally */
+            .gallery-card.invert-card {
+                flex-direction: column;
+                margin-top: 0;
+            }
+
+            .gallery-card.invert-card .gallery-text-box {
+                margin: -40px 15px 0 15px;
+                border-top: 3px solid #c8b08e;
+                border-bottom: none;
+                padding-bottom: 30px;
+            }
+
+            .gallery-text-box {
+                margin: -40px 15px 0 15px;
+            }
+
+            .gallery-image-wrapper {
+                height: 350px;
+            }
+        }
+
+        /* =========================================
+       CORUM SECTION 3: ASYMMETRICAL DUAL-IMAGE
+       ========================================= */
+
+        .corum-contemporary-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            /* Pure white background */
+            padding: 80px 20px 80px 20px;
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .contemporary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            /* Text left, larger image area right */
+            gap: 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        /* Left-Aligned Text Column */
+        .contemporary-text-col {
+            text-align: left;
+            /* Explicitly strictly left-aligned */
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .corum-contemporary-container.is-visible .contemporary-text-col {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contemporary-text-col .overline {
+            color: #212529;
+            /* Gold accent */
+
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #212529;
+            padding-bottom: 5px;
+        }
+
+        .contemporary-text-col h2 {
+
+
+            line-height: 1.2;
+            color: #222;
+            margin-top: 0;
+            margin-bottom: 30px;
+
+        }
+
+        .contemporary-text-col p {
+
+            line-height: 1.9;
+
+            margin-bottom: 25px;
+        }
+
+        /* Dual Image Cluster (Right Side) */
+        .contemporary-image-col {
+            position: relative;
+            height: 600px;
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+        }
+
+        .corum-contemporary-container.is-visible .contemporary-image-col {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* The large background image */
+        .contemporary-main-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 85%;
+            height: 90%;
+            object-fit: cover;
+
+            transition: transform 1.5s ease;
+        }
+
+        /* The smaller overlapping image */
+        .contemporary-accent-img {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 55%;
+            height: 50%;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 12px solid #ffffff;
+            transition: transform 1.5s ease;
+        }
+
+        .contemporary-image-col:hover .contemporary-main-img {
+            transform: scale(1.03);
+        }
+
+        .contemporary-image-col:hover .contemporary-accent-img {
+            transform: scale(1.05) translate(-10px, 10px);
+            /* Pushes the small image out playfully on hover */
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .contemporary-grid {
+                gap: 40px;
+                grid-template-columns: 1fr 1fr;
+            }
+
+
+            .contemporary-image-col {
+                height: 500px;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .corum-contemporary-container {
+                padding: 20px 15px;
+            }
+
+            .contemporary-grid {
+                grid-template-columns: 1fr;
+                gap: 0px;
+            }
+
+            .contemporary-image-col {
+                height: 450px;
+                margin-top: 20px;
+            }
+
+            .contemporary-main-img {
+                width: 90%;
+                height: 85%;
+                right: 0;
+            }
+
+            .contemporary-accent-img {
+                width: 65%;
+                height: 50%;
+                left: 0;
+                bottom: 0;
+                border-width: 8px;
+            }
+        }
+
+        /* =========================================
+       CORUM SECTION 4: OFFSET CONTRAST BLOCK
+       ========================================= */
+
+        .corum-finale-container {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            padding: 80px 20px 120px 20px;
+            /* Extra bottom padding for the dropped block */
+            overflow-x: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        .finale-grid {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Left-Anchored Image */
+        .finale-image {
+            width: 65%;
+            height: 600px;
+            position: relative;
+            z-index: 1;
+            clip-path: inset(0 100% 0 0);
+            /* Wipes smoothly from left to right */
+            transition: clip-path 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .corum-finale-container.is-visible .finale-image {
+            clip-path: inset(0 0 0 0);
+        }
+
+        .finale-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 2s ease;
+        }
+
+        .corum-finale-container.is-visible .finale-image img {
+            transform: scale(1);
+        }
+
+        /* The Solid Dark Contrast Block */
+        .finale-content {
+            width: 45%;
+            background-color: #1a1a1a;
+            /* Deep charcoal for stark contrast */
+            color: #ffffff;
+            padding: 70px 60px;
+            position: absolute;
+            right: 0;
+            bottom: -60px;
+            /* Drops down below the image slightly */
+            z-index: 2;
+
+            /* Animation State */
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s;
+            box-sizing: border-box;
+        }
+
+        .corum-finale-container.is-visible .finale-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .finale-content .overline {
+            color: #212529;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .finale-content h2 {
+
+
+            line-height: 1.1;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        .finale-content p {
+
+            line-height: 1.8;
+            color: #ffffff;
+            /* Softer white for readability */
+            margin-bottom: 25px;
+        }
+
+        /* Bold Gold Button */
+        .finale-btn {
+            display: inline-block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            /* Solid gold to stand out against the dark block */
+            padding: 16px 40px;
+            margin-top: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .finale-btn:hover {
+            background-color: #ffffff;
+            color: #1a1a1a;
+        }
+
+        /* --- TABLET VIEW --- */
+        @media (max-width: 1024px) {
+            .finale-image {
+                width: 75%;
+                height: 500px;
+            }
+
+            .finale-content {
+                width: 55%;
+                padding: 50px 40px;
+                bottom: -40px;
+            }
+
+            .finale-content h2 {
+                font-size: 2.6rem;
+            }
+        }
+
+        /* --- MOBILE VIEW --- */
+        @media (max-width: 768px) {
+            .corum-finale-container {
+                padding: 20px 0px 60px 0px;
+            }
+
+            .finale-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .finale-image {
+                width: 100%;
+                height: 400px;
+            }
+
+            .finale-content {
+                position: relative;
+                width: 90%;
+                right: auto;
+                bottom: auto;
+                margin-top: -80px;
+                /* Pulls it up to overlap the bottom of the image */
+                padding: 40px 30px;
+            }
+
+            .finale-content h2 {
+                font-size: 2rem;
+            }
+
+            .finale-btn {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="corum-intro-container" id="corum-intro-trigger">
+
+        <div class="corum-title-wrapper">
+            <span class="overline">Est. 1955 — La Chaux-de-Fonds</span>
+            <h1>A Bold Beginning in <br><em>Swiss Watchmaking</em></h1>
+        </div>
+
+        <div class="corum-triptych-grid">
+
+            <div class="triptych-text-left">
+                <p>The story of Corum began in 1955, when watchmakers René Bannwart and his uncle Gaston Ries founded
+                    the brand in La Chaux-de-Fonds, Switzerland, one of the world’s most famous watchmaking capitals.
+                    Right from the start, Corum set out to break traditional boundaries and challenge conventional
+                    designs with bold, imaginative timepieces.</p>
+            </div>
+
+            <div class="triptych-image-center">
+                <img src="https://www.christies.com/img/LotImages/2023/GNV/2023_GNV_21982_0480_000(corum_stainless_steel_admirals_cup_competition_ref_010001113926).jpg?mode=max&width=600"
+                    alt="Intricate Swiss watchmaking">
+
+                <div class="splash-container">
+                    <div class="droplet"
+                        style="left: 20%; --dx: -70px; --dy: -140px; --rot: 10deg; width: 6px; height: 6px; animation: sprinkler-fly 1.2s infinite ease-out 0.1s;">
+                    </div>
+                    <div class="droplet"
+                        style="left: 30%; --dx: -40px; --dy: -180px; --rot: 25deg; width: 9px; height: 9px; animation: sprinkler-fly 1.5s infinite ease-out 0.4s;">
+                    </div>
+
+                    <div class="droplet"
+                        style="left: 45%; --dx: -10px; --dy: -200px; --rot: 45deg; width: 11px; height: 11px; animation: sprinkler-fly 1.3s infinite ease-out 0.2s;">
+                    </div>
+                    <div class="droplet"
+                        style="left: 55%; --dx: 15px; --dy: -210px; --rot: 65deg; width: 8px; height: 8px; animation: sprinkler-fly 1.6s infinite ease-out 0.6s;">
+                    </div>
+
+                    <div class="droplet"
+                        style="left: 70%; --dx: 50px; --dy: -170px; --rot: 80deg; width: 7px; height: 7px; animation: sprinkler-fly 1.4s infinite ease-out 0.8s;">
+                    </div>
+                    <div class="droplet"
+                        style="left: 80%; --dx: 80px; --dy: -130px; --rot: 100deg; width: 5px; height: 5px; animation: sprinkler-fly 1.1s infinite ease-out 0.3s;">
+                    </div>
+
+                    <div class="droplet"
+                        style="left: 25%; --dx: -90px; --dy: -100px; --rot: -5deg; width: 4px; height: 4px; animation: sprinkler-fly 1.4s infinite ease-out 0.7s;">
+                    </div>
+                    <div class="droplet"
+                        style="left: 50%; --dx: 5px; --dy: -160px; --rot: 55deg; width: 5px; height: 5px; animation: sprinkler-fly 1.2s infinite ease-out 0.9s;">
+                    </div>
+                    <div class="droplet"
+                        style="left: 75%; --dx: 90px; --dy: -110px; --rot: 110deg; width: 4px; height: 4px; animation: sprinkler-fly 1.3s infinite ease-out 0.5s;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="triptych-text-right">
+                <p>Within just a few years, the brand made its mark with distinctive creations that combined technical
+                    precision with artistic flair. Corum quickly became known for pushing the limits of design while
+                    maintaining the highest standards of Swiss watchmaking craftsmanship. Even today, that daring spirit
+                    remains at the heart of the brand’s identity.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="corum-icons-container" id="corum-icons-trigger">
+
+        <div class="icons-header">
+            <h2>Crafting Icons:<br>From Coin Watches to Admiral’s Cup</h2>
+            <p>Corum's signature lies in its creativity and originality, breaking the mold with timepieces that
+                seamlessly blend technical precision with extraordinary, unconventional design.</p>
+        </div>
+
+        <div class="icons-gallery-grid">
+
+            <div class="gallery-card">
+                <div class="gallery-image-wrapper">
+                    <img src="https://img.chrono24.com/images/uhren/44919452-ls3mtap49ff65wjrz7p8ko0h-ExtraLarge.jpg"
+                        alt="Gold luxury watch detail">
+                </div>
+                <div class="gallery-text-box">
+                    <h3>The Coin Watch</h3>
+                    <p>One of its first big achievements in 1964. This unique timepiece featured an ultra-thin movement
+                        housed inside an actual gold coin, including the famous U.S. Double Eagles and $20 Liberty
+                        coins. It became an instant collector’s piece and a symbol of the brand’s innovative character.
+                    </p>
+                </div>
+            </div>
+
+            <div class="gallery-card invert-card">
+                <div class="gallery-image-wrapper">
+                    <img src="https://sutorhouse.s3.us-east-2.amazonaws.com/wp-content/uploads/2023/02/26173101/03328BDE-9FBF-4CCE-9861-47615E61A98D-scaled.jpeg"
+                        alt="Nautical yacht racing">
+                </div>
+                <div class="gallery-text-box">
+                    <h3>Admiral’s Cup</h3>
+                    <p>Debuting in 1960, this nautical-themed line is distinguished by its bold 12-sided bezel and
+                        colorful maritime flags. It soon became a favorite among both sailing fans and people who enjoy
+                        luxury watches. Over the decades, the Admiral’s Cup has evolved in style and materials but
+                        continues to embody Corum’s adventurous, sporty elegance.</p>
+                </div>
+            </div>
+
+            <div class="gallery-card">
+                <div class="gallery-image-wrapper">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhFcppJBdpUe7hJd5gw3s-KVFntDEu0pPCuGQovk42TVBTDtEeSY3_DohhYnGY6-lgQC8qgVB9NghXZT9wzZtKAkHrXiJWpcLgp_pTlqGC_rYgYUNARLeAxjAcUjBqUgZAsXk0PmQkcYxkm/s1600/Corum+-+Admiral%27s+Cup+Legend+42+Chrono_BIG_HD.jpg"
+                        alt="Modern concept watch face">
+                </div>
+                <div class="gallery-text-box">
+                    <h3>Concept Editions</h3>
+                    <p>Corum gained fame for creating daring limited editions and concept watches, often blending
+                        precious metals with bold, modern aesthetics and unique complications—a powerful combination
+                        that defines the brand today.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="corum-contemporary-container" id="corum-contemporary-trigger">
+        <div class="contemporary-grid">
+
+            <div class="contemporary-text-col">
+                <span class="overline">Modern Artistry</span>
+                <h2>Innovation with a <br>Contemporary Edge</h2>
+                <p>In the modern era, Corum continues to uphold its reputation for innovation while staying true to its
+                    rich heritage. Collections like the Bubble series, known for its oversized domed sapphire crystal
+                    and playful, artistic dials, offer a fresh, unconventional take on luxury timepieces. These bold
+                    designs have attracted a new generation of collectors who appreciate creativity alongside
+                    craftsmanship.</p>
+                <p>Despite changing trends in the watch industry, Corum remains one of the few independent Swiss brands
+                    that dares to blend tradition with modern artistry. Every Corum watch tells a story of bold ideas,
+                    precise mechanics, and a fearless approach to design — making it a true statement piece for watch
+                    enthusiasts around the world.</p>
+            </div>
+
+            <div class="contemporary-image-col">
+                <img class="contemporary-main-img"
+                    src="https://b0650f7f058d5f70d743-97d5bb3f4194bc3eff7a94253e4a4e28.ssl.cf1.rackcdn.com/107810_MAIN_3347.jpg"
+                    alt="Modern Swiss Watch Mechanics">
+
+                <img class="contemporary-accent-img"
+                    src="https://www.watches-news.com/wp-content/uploads/2022/03/corum-admiral-cup-one-openworked-1-watches-news.jpg"
+                    alt="Corum Contemporary Detail">
+            </div>
+
+        </div>
+    </section>
+
+    <section class="corum-finale-container" id="corum-finale-trigger">
+        <div class="finale-grid">
+
+            <div class="finale-image">
+                <img src="https://img.chrono24.com/images/uhren/ld4n0o9il92w-4av8lznu3p452vcwi2qy2muj-ExtraLarge.jpg"
+                    alt="Premium Corum Watch Detail">
+            </div>
+
+            <div class="finale-content">
+                <span class="overline">Jay’s Watch Store</span>
+                <h2>Own Bold Innovation</h2>
+                <p>Explore the daring elegance of pre-owned Corum watches at Jay’s Watch Store. From the
+                    nautical-inspired Admiral’s Cup to the imaginative Bubble and the groundbreaking Golden Bridge, our
+                    collection features iconic designs known for bold aesthetics and Swiss craftsmanship.</p>
+                <p>Each timepiece is carefully authenticated and serviced to deliver unmatched value and uniqueness.
+                    Discover your next statement piece with pre-owned Corum watches at Jay’s Watch Store.</p>
+                <a href="https://jayswatchstore.com/jayswatchv2_qa/preowned-corum" class="finale-btn">Explore Collection</a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            const corumIntroTrigger = document.getElementById('corum-intro-trigger');
+            if (corumIntroTrigger) observer.observe(corumIntroTrigger);
+
+            const corumIconsTrigger = document.getElementById('corum-icons-trigger');
+            if (corumIconsTrigger) observer.observe(corumIconsTrigger);
+
+            const corumContemporaryTrigger = document.getElementById('corum-contemporary-trigger');
+            if (corumContemporaryTrigger) observer.observe(corumContemporaryTrigger);
+
+            const corumFinaleTrigger = document.getElementById('corum-finale-trigger');
+            if (corumFinaleTrigger) observer.observe(corumFinaleTrigger);
+        });
+    </script>
+
+</body>
+
+</html>
